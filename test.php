@@ -1,5 +1,5 @@
 ﻿<?php
 
-	echo "Hello GitHub";
+	echo "GitHub";
 	
 ?>
