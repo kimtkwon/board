@@ -10,9 +10,10 @@ $diff_date = date("Y-m-d H:i:s", strtotime("-90 day"));
 $sql = "SELECT no,id,name,last_login FROM user WHERE last_login <= '{$diff_date}'";
 
 $result = mysqli_query($conn,$sql);
+mysqli_close($conn);
 $rows = mysqli_num_rows($result);
 $arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+mysqli_free_result($result);
 echo "<table border='1'>";
 echo "<tr>
   <th>선택</th><th width='40px'>번호</th><th width='150px'>아이디</th><th width='120px'>이름</th><th>최근 로그인기록</th>
