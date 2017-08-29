@@ -35,6 +35,9 @@ for($i=0; $i<$rows; $i++)
 	</tr>
 <?php
 	}
+mysqli_free_result($result);
+mysqli_close($connect);
+ //결과 초기화, 서버 연결 끊기
 ?>
 
 	<tr height="50px">
