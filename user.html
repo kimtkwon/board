@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+<title>회원가입페이지</title>
+<head></head>
+<body>
+<style>
+	th
+	{
+		font-family:"맑은 고딕";
+		font-size:14px;
+		padding:5px;
+		background-color:#F2F2F2;
+		height:30px;
+	}
+	fieldset
+	{
+		width:300px;
+		height:300px;
+		margin:50px auto;
+	}
+	legend
+	{
+		text-align:center;
+	}
+	.join
+	{
+		text-align:right;
+	}
+	.id_check
+	{
+		background-color:#CEF6CE;
+		font-size:12px;
+	}
+	.choice
+	{
+		font-size:12px;
+		color:red;
+	}
+	.id_check2
+	{
+		font-size:12px;
+		color:pink;
+	}
+</style>
+<fieldset><legend><b>회원가입</b></legend>
+<form method="POST" formaction="">
+<table>
+	<tr>
+		<th>ID</th><td class="choice">*</td><td><input type="text" name="ID" placeholder="아이디" autofocus required></td>
+		<td><input type="hidden" name="onoff" value="1"><input class="id_check" type="button" name="check" value="중복 확인"></td>
+	</tr>
+	<tr>
+		<td></td><td></td><td><div class="id_check2" id="id_check"></div></td>
+	</tr>
+	<tr>
+		<th>PASSWORD</th><td class="choice">*</td><td><input type="text" name="PASS" placeholder="비밀번호" ></td>
+	</tr>
+	<tr>
+		<th>이름</th><td class="choice">*</td><td><input type="text" name="NAME" placeholder="이름" ></td>
+	</tr>
+	<tr>
+		<th>E-mail</th><td></td><td><input type="email" name="EMAIL" placeholder="이메일"></td>
+	</tr>
+	<tr>
+		<th>PHONE</th><td></td><td><input type="text" name="PHONE" placeholder="-없이 숫자만 입력"></td>
+	</tr>
+	<tr>
+		<td colspan="4" class="join"><input type="submit" value="가입하기" formaction="user_proc.php"></td>
+	</tr>
+</table>
+</form>
+<i class="choice">가입시 * 표시칸은 필수 입력사항입니다.</i>
+</fieldset>
+</body>
+
+<script>
+function id(data)
+{
+	if(data == -1)
+	{
+		data = "ID가 입력되지 않았습니다.";
+		color = "black";
+	}
+	else if(data == 1)
+	{
+		data = "사용중인 ID 입니다.";
+		color = "red";
+	}
+	else
+	{
+	 $("input[name='onoff']").val(0);
+		data = "사용가능한 ID 입니다.";
+		color = "blue";
+	}
+	$("#id_check").text(data);
+	$("#id_check").css({"color":color});
+};
+
+function id2()
+{
+id_check3 = $("input[name='ID']").val();
+$.ajax({
+		type:"POST",
+		url:"/id_check.php",
+		data:{ID:id_check3},
+		success:id,
+	});
+}
+$("input[name='check']").click(id2);
+
+</script>

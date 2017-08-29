@@ -1,0 +1,202 @@
+<?php
+SESSION_START();
+?>
+<!DOCTYPE html>
+<script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+<html>
+<head></head>
+<body>
+
+<style>
+	table
+	{
+		border-collapse:collapse;
+		width:1000px;
+		margin:20px auto;
+	}
+	th
+	{
+		font-size:14px;
+	}
+	.search
+	{
+		width:200px;
+		valign:top;
+	}
+	fieldset
+	{
+		width:1000px;
+		margin:50px auto;
+		background-color:#FCF7F8;
+	}
+	.select
+	{
+		valgin:center;
+		border:0px;
+		height:20px;
+	}
+	td
+	{
+		font-size:14px;
+		text-align:center;
+		padding:4px;
+		cursor:pointer;
+	}
+	tr
+	{
+		cursor:hand;
+	}
+	.title
+	{
+		text-align:left;
+	}
+	.page:link
+	{
+		font-size:15px;
+		color:#424242;
+		text-decoration:none;
+	}
+</style>
+<script>
+</script>
+<?php
+	if(isset($_SESSION['ID']))
+	{
+?>
+<form method="POST" action="logout.php">
+<div align="right"><?=$_SESSION['ID']?>님! 환영합니다.<input type="submit" value="logout">
+<?php
+	if($_SESSION['ID'] == 'kimtkwon')
+	{
+?>
+<input type="button" value="admin" onclick="location.href='/admin.php'">
+<?php
+}
+?>
+</div></form>
+<fieldset>
+<table border="1" width="100%">
+<tr>
+<th width="5%">글 번호</th>
+<th width="35%">제목</th>
+<th width="15%">작성자</th>
+<th width="25%">작성일</th>
+<th width="10%">첨부파일<!--<img src="/img/upload.png" width="20px">--></th>
+<th width="5%">조회수</th>
+</tr>
+<?php
+	
+include "conn.php";
+	
+$per_page = 15;
+if(isset($_GET['page']))
+{
+	$page = $_GET['page'];
+	$page = ($page-1)*$per_page;//(2-1)*3 시작행 = 3
+}
+else
+{
+	$page = 0; 
+}
+
+	if(isset($_POST['field']) or isset($_POST['search']))
+	{
+		$field = $_POST['field'];
+		$search = $_POST['search'];
+		$sql = "select * from source_board where {$field} like '%{$search}%' order by date desc limit {$page}, {$per_page}";
+		$result = mysqli_query($conn, $sql);
+		$rows = mysqli_num_rows($result);
+		$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		for($i=0; $i<$rows; $i++)
+		{
+			echo "<tr onclick=\"location.href='/write_read.php?no={$arr[$i]['no']}'\">";
+			echo "<td>{$arr[$i]['no']}</td><td class='title'>{$arr[$i]['title']}";
+			
+			if($arr[$i]['reply'] > 0)
+			{
+				echo "<a style='font-size:12px; color:#089AFB'> 댓글[{$arr[$i]['reply']}]</a>";		
+			}
+			else
+			{
+			
+			}
+			echo "</td><td>{$arr[$i]['writer']}</td><td>{$arr[$i]['date']}</td><td>{$arr[$i]['upload']}</td>
+				 	<td>{$arr[$i]['hit']}</td>";
+			echo "</tr>";
+		}
+	}
+  
+	else
+	{
+	$sql = "select * from source_board order by date desc limit {$page}, {$per_page}";
+	$result = mysqli_query($conn, $sql);
+	$rows = mysqli_num_rows($result);
+	$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+	for($i=0; $i<$rows; $i++)
+		{
+			echo "<tr onclick=\"location.href='/write_read.php?no={$arr[$i]['no']}'\">";
+			echo "<td>{$arr[$i]['no']}</td><td class='title'>{$arr[$i]['title']}";
+			
+			if($arr[$i]['reply'] > 0)
+			{
+				echo "<a style='font-size:12px; color:#089AFB'> 댓글[{$arr[$i]['reply']}]</a>";		
+			}
+			else
+			{
+			
+			}
+			echo "</td><td>{$arr[$i]['writer']}</td><td>{$arr[$i]['date']}</td><td>{$arr[$i]['upload']}</td>
+				 	<td>{$arr[$i]['hit']}</td>";
+			echo "</tr>";
+		}
+	}
+	
+?>
+
+</table>
+	<form method="POST" action="">
+	<div align="center">
+	<select class="select" name="field">
+		<option value="writer">작성자</option>
+		<option value="title">제목</option>
+		<option value="tag">Tag</option>
+	</select>
+	<input class="search" type="text" name="search" placeholder="검색어를 입력하세요">
+	<input type="submit" value="검색" formaction="main_board.html">
+	</div>
+	
+<div align="center">
+<?php
+
+$sql = "select no from source_board";  
+$result = mysqli_query($conn,$sql);
+$rows = mysqli_num_rows($result);
+$num_page = ceil($rows/$per_page);
+
+for($i=1; $i<=$num_page; $i++)
+{
+	echo "<a class='page' href='main_board.html?page={$i}'>{$i} </a>";
+}
+
+?>
+</div>
+	
+<div align="right">
+<input type="submit" formaction="write_board.php" value="글작성">
+</div>
+</form>
+</fieldset>
+<?php
+}
+else
+{
+	echo "<script>location.href='/login.php';
+			</script>";
+}
+?>
+
+
+</body>
+</html>
