@@ -12,7 +12,7 @@ $sql = "SELECT no,id,name,last_login FROM user WHERE last_login <= '{$diff_date}
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
 $arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
-/*주석*/
+mysqli_free_result($result);
 echo "<table border='1'>";
 echo "<tr>
   <th>선택</th><th width='40px'>번호</th><th width='150px'>아이디</th><th width='120px'>이름</th><th>최근 로그인기록</th>
