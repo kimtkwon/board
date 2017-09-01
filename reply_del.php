@@ -3,6 +3,14 @@
 
 SESSION_START();
 
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
 
  include "conn.php";
 	$no = $_POST['no'];
