@@ -14,6 +14,7 @@ $sql = "select no,id,name,approval_date,email from user";
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
 $arr = mysqli_fetch_all($result,MYSQLI_ASSOC);
+mysqli_free_result($result);
 
 echo "<table border ='1'><tr>";
 echo "<th>회원번호</th><th>ID</th><th>이름</th><th>가입일</th><th>이메일</th></tr>";
@@ -38,6 +39,7 @@ $sql = "select no, title, writer, date from source_board order by date desc limi
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
 $fields = mysqli_num_fields($result);
+mysqli_free_result($result);
 $arr = mysqli_fetch_all($result,MYSQLI_NUM);
 
 echo "<table border ='1'><tr>";
@@ -62,9 +64,10 @@ echo "</table>";
 if($analys == 3 )
 {
 $sql = "select no,title, writer, date, hit from source_board order by hit desc limit 3";
-
+mysqli_close($conn);
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
+mysqli_free_result($result);
 $fields = mysqli_num_fields($result);
 $arr = mysqli_fetch_all($result,MYSQLI_NUM);
 
