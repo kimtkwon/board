@@ -1,5 +1,15 @@
 <?php
 SESSION_START();
+
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
+
 ?>
 <html>
 <style>
@@ -135,7 +145,7 @@ SESSION_START();
 <th colspan="2">SOURCE</th>
 </tr>
 <tr>
-<td colspan="2"><textarea cols="150" rows="50" name="content"  style="resize:none"></textarea></th>
+<td colspan="2"><textarea cols="150" rows="10" name="content"  style="resize:none"></textarea></th>
 </tr>
 <tr>
 <td colspan="2" align="center">
