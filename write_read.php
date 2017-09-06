@@ -88,6 +88,14 @@ $no = $_GET['no'];
 $sql = "select * from source_board where no = {$no}";
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
+if(!$rows)
+{
+	echo "<script>
+		alert('존재하지 않는 페이지입니다.');
+		location.href='javascript:history.back()';
+		</script>";
+	exit;
+}
 $arr = mysqli_fetch_assoc($result);
 
 //echo $no;
@@ -165,6 +173,7 @@ else
 <?php
 	}
 }
+
 ?>
 <tr height="20px">
 </tr>
