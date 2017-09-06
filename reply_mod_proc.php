@@ -30,9 +30,9 @@ if($result)
 	}
 else
 	{
-		echo 	"<script>
-				 alert('다시 시도해주세요');
-				 location.href='/write_read.php?no={$board_no}';
+		echo "<script>
+				alert('댓글 수정 실패했습니다.');
+				location.href='/write_read.php?no={$board_no}';
 				</script>";
 	}
 
