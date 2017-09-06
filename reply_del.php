@@ -32,7 +32,12 @@ if(!isset($_SESSION['ID']))
 				location.href='/write_read.php?no={$board_no}';
 				</script>";
   }
-
+  else
+  {
+	  echo "<script>
+			alert('댓글 삭제를 실패했습니다. ');
+			</script>";
+  }
   mysqli_close($conn);
 
 ?> 
