@@ -13,6 +13,11 @@ if(!isset($_SESSION['ID']))
 
 
  include "conn.php";
+ if(!isset($_POST['no']) OR !isset($_POST['board_no']))
+ {
+	 echo "값을 찾을 수 없습니다.";
+	 exit;
+ }
 	$no = $_POST['no'];
 	$board_no = $_POST['board_no'];
 //echo $no;
@@ -27,6 +32,7 @@ if(!isset($_SESSION['ID']))
 				location.href='/write_read.php?no={$board_no}';
 				</script>";
   }
+
   mysqli_close($conn);
 
 ?> 
