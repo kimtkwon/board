@@ -41,6 +41,7 @@ if($result)
 	echo	"<script>
 	location.href='write_read.php?no={$no}';
 	</script>";
+	exit;
 }
 else
 {
@@ -48,7 +49,9 @@ else
 	alert('입력에 실패했습니다.');
 	location.href='write_read.php?no={$no}';
 	</script>";
+	exit;
 }
-
+mysqli_free_result($result);
+mysqli_close($conn);
 
 ?>
