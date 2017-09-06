@@ -100,10 +100,10 @@ $arr = mysqli_fetch_assoc($result);
 
 //echo $no;
 //print_r ($arr);
+mysqli_free_result($result);
 $sql = "update source_board set hit = hit + 1 where no = {$no}";
 //echo $sql;
 $result = mysqli_query($conn,$sql);
-
 ?>
 
 <P>
@@ -139,6 +139,7 @@ else
 <tr>
 <th>첨부파일</th>
 <?php
+
 if ($_SESSION['ID'] == $arr['writer'])
 {
 	if($arr['upload'] != "")
