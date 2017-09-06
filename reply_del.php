@@ -38,6 +38,7 @@ if(!isset($_SESSION['ID']))
 			alert('댓글 삭제를 실패했습니다. ');
 			</script>";
   }
+  mysqli_free_result($result);
   mysqli_close($conn);
 
 ?> 
