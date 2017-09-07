@@ -2,6 +2,16 @@
 
 include "conn.php";
 //print_r ($_POST);
+
+ if(!isset($_POST['no']))
+ {
+	 echo "<script>
+			alert('값을 찾을 수 없습니다.');
+			 location.href='javascript:history.back()';
+			</script>";
+	 exit;
+ }
+
 $no = $_POST['no'];
 //echo $no;
 $sql = "delete from source_board where no = {$no}";
