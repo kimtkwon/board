@@ -1,7 +1,16 @@
 ﻿<?php
-
 include "conn.php";
 //print_r ($_POST);
+
+SESSION_START();
+
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
 
  if(!isset($_POST['no']))
  {
