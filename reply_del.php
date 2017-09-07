@@ -3,8 +3,21 @@
 
 SESSION_START();
 
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
 
  include "conn.php";
+ if(!isset($_POST['no']) OR !isset($_POST['board_no']))
+ {
+	 echo "값을 찾을 수 없습니다.";
+	 exit;
+ }
 	$no = $_POST['no'];
 	$board_no = $_POST['board_no'];
 //echo $no;
@@ -19,6 +32,13 @@ SESSION_START();
 				location.href='/write_read.php?no={$board_no}';
 				</script>";
   }
+  else
+  {
+	  echo "<script>
+			alert('댓글 삭제를 실패했습니다. ');
+			</script>";
+  }
+  mysqli_free_result($result);
   mysqli_close($conn);
 
 ?> 

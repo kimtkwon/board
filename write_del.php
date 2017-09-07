@@ -1,7 +1,26 @@
 ﻿<?php
-
 include "conn.php";
 //print_r ($_POST);
+
+SESSION_START();
+
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
+ if(!isset($_POST['no']))
+ {
+	 echo "<script>
+			alert('값을 찾을 수 없습니다.');
+			 location.href='javascript:history.back()';
+			</script>";
+	 exit;
+ }
+
 $no = $_POST['no'];
 //echo $no;
 $sql = "delete from source_board where no = {$no}";
@@ -23,4 +42,6 @@ else
 		  </script>";
 		  
 }
+mysqli_free_result($result);
+mysqli_close($conn);
 ?>

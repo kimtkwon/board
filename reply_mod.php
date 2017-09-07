@@ -1,5 +1,14 @@
 <?php
 SESSION_START();
+
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
 ?>
 <html>
 <head></head>
@@ -9,8 +18,17 @@ SESSION_START();
 
 <?php
 include "conn.php";
+
+ if(!isset($_POST['no']) OR !isset($_POST['board_no']))
+ {
+	 echo "값을 찾을 수 없습니다.";
+	 exit;
+ }
+
+
 $no = $_POST['no'];
 $board_no = $_POST['board_no'];
+
 $sql = "select * from reply where no = {$no} and board_no = {$board_no} and board_name = 'free'";
 //echo $sql;
 //exit;

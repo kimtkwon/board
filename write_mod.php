@@ -1,17 +1,42 @@
 ﻿<?php
 SESSION_START();
 
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
 //print_r ($_POST);
 //echo $no;
 include "conn.php";
 
+if(!isset($_POST['no']) OR !isset($_POST['writer']) OR !isset($_POST['title']) OR !isset($_POST['content']))
+{
+	echo "  <script>
+			alert('값을 찾지 못하였습니다.');
+			location.href='javascript:history.back()';
+			</script>";
+	exit;
+}
+
+if($_POST['writer'] == '' OR $_POST['title'] =='' OR $_POST['content'] == '')
+{
+	echo "<script>
+			alert('작성자,제목,내용이 입력 되지 않았습니다.');
+			location.href='javascript:history.back()';
+			</script>";
+	exit;
+}
 
 $no = $_POST['no'];
 $writer = mysqli_real_escape_string($conn,$_POST['writer']);
 $title = mysqli_real_escape_string($conn,$_POST['title']);
 $content = mysqli_real_escape_string($conn,$_POST['content']);
 
-if(!is_uploaded_file($_FILES['att']['tmp_name']))
+if(!isset($_FILES['att']['tmp_name']))
 {
 	$sql = "update source_board set writer = '{$writer}', title = '{$title}', content = '{$content}' where no = {$no}";
 //echo $sql;
@@ -49,4 +74,6 @@ else
 		  </script>";
 
 }
+mysqli_free_result($result);
+mysqli_close($conn);
 ?>

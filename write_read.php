@@ -2,6 +2,14 @@
 <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
 <?php
 SESSION_START();
+
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
 ?>
 <html>
 <head>
@@ -80,14 +88,22 @@ $no = $_GET['no'];
 $sql = "select * from source_board where no = {$no}";
 $result = mysqli_query($conn,$sql);
 $rows = mysqli_num_rows($result);
+if(!$rows)
+{
+	echo "<script>
+		alert('존재하지 않는 페이지입니다.');
+		location.href='javascript:history.back()';
+		</script>";
+	exit;
+}
 $arr = mysqli_fetch_assoc($result);
 
 //echo $no;
 //print_r ($arr);
+mysqli_free_result($result);
 $sql = "update source_board set hit = hit + 1 where no = {$no}";
 //echo $sql;
 $result = mysqli_query($conn,$sql);
-
 ?>
 
 <P>
@@ -123,6 +139,7 @@ else
 <tr>
 <th>첨부파일</th>
 <?php
+
 if ($_SESSION['ID'] == $arr['writer'])
 {
 	if($arr['upload'] != "")
@@ -157,6 +174,7 @@ else
 <?php
 	}
 }
+
 ?>
 <tr height="20px">
 </tr>

@@ -1,5 +1,5 @@
 ﻿<?php
-	$conn = mysqli_connect("127.0.0.1", "root", "0208", "source");
+	$conn = mysqli_connect("127.0.0.1", "root", "1896", "source");
 	
 	if (!isset($conn))
 	{
