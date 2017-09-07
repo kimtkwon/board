@@ -5,6 +5,15 @@ SESSION_START();
 //echo $no;
 include "conn.php";
 
+if(!isset($_POST['no']) OR !isset($_POST['writer']) OR !isset($_POST['title']) OR !isset($_POST['content']))
+{
+	echo "  <script>
+			alert('값을 찾지 못하였습니다.');
+			location.href='javascript:history.back()';
+			</script>";
+	exit;
+}
+
 if($_POST['writer'] == '' OR $_POST['title'] =='' OR $_POST['content'] == '')
 {
 	echo "<script>
@@ -13,9 +22,6 @@ if($_POST['writer'] == '' OR $_POST['title'] =='' OR $_POST['content'] == '')
 			</script>";
 	exit;
 }
-
-
-
 
 $no = $_POST['no'];
 $writer = mysqli_real_escape_string($conn,$_POST['writer']);
@@ -55,9 +61,9 @@ if($result)
 else
 {	
 	
-		echo "<script>alert('잠시 후 다시 시도하세요');
+		/*echo "<script>alert('잠시 후 다시 시도하세요');
 		  location.href='javascript:history.back()';
-		  </script>";
+		  </script>";*/
 
 }
 ?>
