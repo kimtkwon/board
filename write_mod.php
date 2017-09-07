@@ -1,6 +1,14 @@
 ﻿<?php
 SESSION_START();
 
+if(!isset($_SESSION['ID']))
+{
+	echo "<script>
+		   location.href='javascript:history.back()';
+		   </script>";
+	exit;
+}
+
 //print_r ($_POST);
 //echo $no;
 include "conn.php";
@@ -61,9 +69,9 @@ if($result)
 else
 {	
 	
-		/*echo "<script>alert('잠시 후 다시 시도하세요');
+		echo "<script>alert('잠시 후 다시 시도하세요');
 		  location.href='javascript:history.back()';
-		  </script>";*/
+		  </script>";
 
 }
 ?>
