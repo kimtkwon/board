@@ -1,8 +1,8 @@
 ﻿<?php
 	$conn = mysqli_connect("127.0.0.1", "root", "1896", "source");
 	
-	if (!isset($conn))
+	if(!$conn)
 	{
-		echo "서버 접속에 실패하였습니다";
+		echo "서버 접속에 실패했습니다.";
 	}
 ?>
