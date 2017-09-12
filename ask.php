@@ -1,7 +1,16 @@
+<?php
+SESSION_START();
+?>
 <form method="POST" action="">
 <input type="submit" name="ask" value="조회" formaction="ask.php">
 </form>
+
 <?php
+if(!isset($_SESSION['ID']))
+{
+  echo "접속오류";
+  exit;
+}
 include "conn.php";
 date_default_timezone_set("Asia/Seoul");
 
@@ -10,6 +19,11 @@ $diff_date = date("Y-m-d H:i:s", strtotime("-90 day"));
 $sql = "SELECT no,id,name,last_login FROM user WHERE last_login <= '{$diff_date}'";
 
 $result = mysqli_query($conn,$sql);
+if(!$result)
+{
+  echo "테이블&필드명이 존재 하지않습니다";
+  exit;
+}
 mysqli_close($conn);
 $rows = mysqli_num_rows($result);
 $arr = mysqli_fetch_all($result, MYSQLI_ASSOC);

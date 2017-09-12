@@ -1,6 +1,11 @@
 <?php
 include "conn.php";
 
+if(!isset($_POST['ask']))
+{
+  echo "ID변수가 없습니다";
+  exit;
+}
 $id = $_POST['ask'];
 $ids = "'".implode("','",$id)."'";
 
